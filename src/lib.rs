@@ -40,6 +40,12 @@ impl<const M: usize, const N: usize> CicFilter<M, N> {
     }
 }
 
+impl<const M: usize, const N: usize> Default for CicFilter<M, N> {
+    fn default() -> Self {
+        Self::new()
+    }
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
