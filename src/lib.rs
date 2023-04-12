@@ -33,6 +33,7 @@ impl<const M: usize, const N: usize> CicFilter<M, N> {
             for differentiator in self.differentiators.iter_mut() {
                 v = differentiator.differentiate(v);
             }
+            // TODO 出力はM^Nで割らないといけないかも
             Some(v)
         } else {
             None
