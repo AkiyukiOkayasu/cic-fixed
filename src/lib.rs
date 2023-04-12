@@ -14,7 +14,7 @@ pub struct CicFilter<const M: usize, const N: usize> {
 }
 
 impl<const M: usize, const N: usize> CicFilter<M, N> {
-    fn new() -> Self {
+    pub fn new() -> Self {
         Self {
             decimator: decimator::Decimator::new(),
             integrators: [integrator::Integrator::new(); N],
@@ -22,7 +22,7 @@ impl<const M: usize, const N: usize> CicFilter<M, N> {
         }
     }
 
-    fn filter(&mut self, input: i32) -> Option<i32> {
+    pub fn filter(&mut self, input: i32) -> Option<i32> {
         let mut output = input;
         for integrator in self.integrators.iter_mut() {
             output = integrator.integrate(output);
