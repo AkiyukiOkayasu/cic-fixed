@@ -21,10 +21,23 @@ impl<const M: usize, const N: usize> CicFilter<M, N> {
             differentiators: [differentiator::Differentiator::new(); N],
         }
     }
-}
 
-pub fn add(left: usize, right: usize) -> usize {
-    left + right
+    fn filter(&mut self, input: i32) -> Option<i32> {
+        let mut output = input;
+        for integrator in self.integrators.iter_mut() {
+            output = integrator.integrate(output);
+        }
+
+        if let Some(output) = self.decimator.decimate(output) {
+            let mut v = output;
+            for differentiator in self.differentiators.iter_mut() {
+                v = differentiator.differentiate(v);
+            }
+            Some(v)
+        } else {
+            None
+        }
+    }
 }
 
 #[cfg(test)]
@@ -33,7 +46,25 @@ mod tests {
 
     #[test]
     fn it_works() {
-        let result = add(2, 2);
-        assert_eq!(result, 4);
+        let mut filter = CicFilter::<4, 2>::new();
+        let result = filter.filter(0);
+        assert!(result.is_none());
+        let result = filter.filter(1);
+        assert!(result.is_none());
+        let result = filter.filter(2);
+        assert!(result.is_none());
+        let result = filter.filter(3);
+        assert!(result.is_some());
+        assert_eq!(result.unwrap(), 10);
+
+        let result = filter.filter(2);
+        assert!(result.is_none());
+        let result = filter.filter(-1);
+        assert!(result.is_none());
+        let result = filter.filter(-2);
+        assert!(result.is_none());
+        let result = filter.filter(1);
+        assert!(result.is_some());
+        assert_eq!(result.unwrap(), 16);
     }
 }
