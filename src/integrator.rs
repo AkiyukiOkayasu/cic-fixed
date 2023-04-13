@@ -20,7 +20,7 @@ mod tests {
     use super::*;
 
     #[test]
-    fn defferentiate_test() {
+    fn integrate_test() {
         let mut integrator = Integrator::new();
         let result = integrator.integrate(2);
         assert_eq!(result, 2);
