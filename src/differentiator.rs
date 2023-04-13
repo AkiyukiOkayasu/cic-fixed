@@ -9,7 +9,7 @@ impl Differentiator {
     }
 
     pub(crate) fn differentiate(&mut self, input: i32) -> i32 {
-        let output = input - self.last_input;
+        let output = input.wrapping_sub(self.last_input);
         self.last_input = input;
         output
     }

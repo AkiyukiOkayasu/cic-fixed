@@ -74,4 +74,13 @@ mod tests {
         assert!(result.is_some());
         assert_eq!(result.unwrap(), 16);
     }
+
+    #[test]
+    fn overflow_test() {
+        let mut filter = CicDecimationFilter::<4, 2>::new();
+
+        for _ in 0..1000 {
+            filter.filter(i32::MAX);
+        }
+    }
 }

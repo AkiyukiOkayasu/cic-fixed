@@ -9,7 +9,7 @@ impl Integrator {
     }
 
     pub(crate) fn integrate(&mut self, input: i32) -> i32 {
-        let output = input + self.last_output;
+        let output = self.last_output.wrapping_add(input);
         self.last_output = output;
         output
     }
