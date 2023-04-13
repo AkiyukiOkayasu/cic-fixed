@@ -52,7 +52,7 @@ mod tests {
     use super::*;
 
     #[test]
-    fn it_works() {
+    fn cic_decimation_test() {
         let mut filter = CicDecimationFilter::<4, 2>::new();
         let result = filter.filter(0);
         assert!(result.is_none());
