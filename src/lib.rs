@@ -7,13 +7,13 @@ mod integrator;
 /// A cic filter
 /// M: decimation factor
 /// N: number of stages
-pub struct CicFilter<const M: usize, const N: usize> {
+pub struct CicDecimationFilter<const M: usize, const N: usize> {
     decimator: decimator::Decimator<M>,
     integrators: [integrator::Integrator; N],
     differentiators: [differentiator::Differentiator; N],
 }
 
-impl<const M: usize, const N: usize> CicFilter<M, N> {
+impl<const M: usize, const N: usize> CicDecimationFilter<M, N> {
     pub fn new() -> Self {
         Self {
             decimator: decimator::Decimator::new(),
@@ -41,7 +41,7 @@ impl<const M: usize, const N: usize> CicFilter<M, N> {
     }
 }
 
-impl<const M: usize, const N: usize> Default for CicFilter<M, N> {
+impl<const M: usize, const N: usize> Default for CicDecimationFilter<M, N> {
     fn default() -> Self {
         Self::new()
     }
@@ -53,7 +53,7 @@ mod tests {
 
     #[test]
     fn it_works() {
-        let mut filter = CicFilter::<4, 2>::new();
+        let mut filter = CicDecimationFilter::<4, 2>::new();
         let result = filter.filter(0);
         assert!(result.is_none());
         let result = filter.filter(1);
