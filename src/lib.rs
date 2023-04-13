@@ -22,6 +22,7 @@ impl<const M: usize, const N: usize> CicDecimationFilter<M, N> {
         }
     }
 
+    #[inline]
     pub fn filter(&mut self, input: i32) -> Option<i32> {
         let mut output = input;
         for integrator in self.integrators.iter_mut() {

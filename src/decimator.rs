@@ -8,6 +8,7 @@ impl<const M: usize> Decimator<M> {
         Self { counter: 0 }
     }
 
+    #[inline]
     pub(crate) fn decimate(&mut self, input: i32) -> Option<i32> {
         self.counter += 1;
         if self.counter == M {
