@@ -39,7 +39,7 @@ impl<const M: usize, const N: usize> CicDecimationFilter<M, N> {
             }
             Some(output)
         } else {
-            return None;
+            None
         }
     }
 }
