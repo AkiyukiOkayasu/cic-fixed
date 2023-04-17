@@ -16,3 +16,9 @@ rust-version = "1.68.2"
 [dependencies]
 
 
+[dev-dependencies]
+criterion = {version = "0.4", features = ["html_reports"]}  
+
+[[bench]]
+name = "cic_bench"
+harness = false
