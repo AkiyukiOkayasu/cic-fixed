@@ -1,43 +1,45 @@
 #![cfg_attr(not(test), no_std)]
 
-mod decimator;
-mod differentiator;
-mod integrator;
-
 /// A cic filter
 /// M: decimation factor
 /// N: number of stages
 pub struct CicDecimationFilter<const M: usize, const N: usize> {
-    decimator: decimator::Decimator<M>,
-    integrators: [integrator::Integrator; N],
-    differentiators: [differentiator::Differentiator; N],
+    decimator_counter: usize,
+    integrators_last_output: [i32; N],
+    differentiators_last_input: [i32; N],
 }
 
 impl<const M: usize, const N: usize> CicDecimationFilter<M, N> {
     pub fn new() -> Self {
         Self {
-            decimator: decimator::Decimator::new(),
-            integrators: [integrator::Integrator::new(); N],
-            differentiators: [differentiator::Differentiator::new(); N],
+            decimator_counter: 0,
+            integrators_last_output: [0i32; N],
+            differentiators_last_input: [0i32; N],
         }
     }
 
     #[inline]
     pub fn filter(&mut self, input: i32) -> Option<i32> {
         let mut output = input;
-        for integrator in self.integrators.iter_mut() {
-            output = integrator.integrate(output);
+        for e in self.integrators_last_output.iter_mut() {
+            // integrator
+            output = e.wrapping_add(output);
+            *e = output;
         }
 
-        if let Some(output) = self.decimator.decimate(output) {
-            let mut v = output;
-            for differentiator in self.differentiators.iter_mut() {
-                v = differentiator.differentiate(v);
+        self.decimator_counter += 1;
+
+        if self.decimator_counter == M {
+            self.decimator_counter = 0;
+            for d in self.differentiators_last_input.iter_mut() {
+                // differentiator
+                let temp = output;
+                output = output.wrapping_sub(*d);
+                *d = temp;
             }
-            // TODO 出力はM^Nで割らないといけないかも
-            Some(v)
+            Some(output)
         } else {
-            None
+            return None;
         }
     }
 }
