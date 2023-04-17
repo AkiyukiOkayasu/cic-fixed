@@ -74,6 +74,46 @@ mod tests {
         let result = filter.filter(1);
         assert!(result.is_some());
         assert_eq!(result.unwrap(), 16);
+
+        let result = filter.filter(2);
+        assert!(result.is_none());
+        let result = filter.filter(-1);
+        assert!(result.is_none());
+        let result = filter.filter(-2);
+        assert!(result.is_none());
+        let result = filter.filter(1);
+        assert!(result.is_some());
+        assert_eq!(result.unwrap(), 0);
+
+        let result = filter.filter(2);
+        assert!(result.is_none());
+        let result = filter.filter(-1);
+        assert!(result.is_none());
+        let result = filter.filter(-2);
+        assert!(result.is_none());
+        let result = filter.filter(1);
+        assert!(result.is_some());
+        assert_eq!(result.unwrap(), 0);
+
+        let result = filter.filter(0);
+        assert!(result.is_none());
+        let result = filter.filter(1);
+        assert!(result.is_none());
+        let result = filter.filter(2);
+        assert!(result.is_none());
+        let result = filter.filter(3);
+        assert!(result.is_some());
+        assert_eq!(result.unwrap(), 8);
+
+        let result = filter.filter(3);
+        assert!(result.is_none());
+        let result = filter.filter(3);
+        assert!(result.is_none());
+        let result = filter.filter(-2);
+        assert!(result.is_none());
+        let result = filter.filter(1);
+        assert!(result.is_some());
+        assert_eq!(result.unwrap(), 32);
     }
 
     #[test]
