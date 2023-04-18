@@ -1,18 +1,13 @@
 # cic-fixed
 
-CIC filter
+A CIC filter implementation for fixed point numbers.  
+Implemented for use in converting PDM to PCM.  
 
 ## TODO
 
-- CIC interpolation filter
+- Implement CIC interpolation filter
 
 ## no_std
 
 cic-fixed works with no_std by default.
-No setup is needed.
-
-## Benchmark
-
-```bash
-cargo criterion
-```
+No setup is needed.  
