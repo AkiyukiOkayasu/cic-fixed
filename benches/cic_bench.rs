@@ -1,3 +1,12 @@
+//! Benchmark for the CIC filter.  
+//!
+//! # Example
+//!
+//! ```
+//! cargo criterion
+//! ```
+//!
+
 use cic_fixed::CicDecimationFilter;
 use criterion::{black_box, criterion_group, criterion_main, Criterion};
 

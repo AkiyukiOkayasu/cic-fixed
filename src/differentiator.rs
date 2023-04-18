@@ -1,3 +1,8 @@
+//! Differentiator  
+//!
+//! A simple differentiator for use in cic filters.  
+
+/// Differentiator
 #[derive(Default, Clone, Copy)]
 pub(crate) struct Differentiator {
     last_input: i32,
@@ -8,6 +13,15 @@ impl Differentiator {
         Self { last_input: 0 }
     }
 
+    /// Differentiate the input and return the output.
+    ///
+    /// # Arguments
+    ///
+    /// * `input` - The input to differentiate.
+    ///
+    /// # Returns
+    ///
+    /// The output of the differentiator.
     #[inline]
     pub(crate) fn differentiate(&mut self, input: i32) -> i32 {
         let output = input.wrapping_sub(self.last_input);

@@ -1,12 +1,34 @@
+//! # cic-fixed
+//!
+//! A CIC filter implementation for fixed point numbers.  
+//! Implemented for use in converting PDM to PCM.  
+//!
+//! ## Example
+//!
+//! ```rust
+//! use cic_fixed::CicDecimationFilter;
+//!
+//! let mut filter = CicDecimationFilter::<4, 2>::new();
+//! let result = filter.filter(0);
+//! assert!(result.is_none());
+//! let result = filter.filter(1);
+//! assert!(result.is_none());
+//! let result = filter.filter(2);
+//! assert!(result.is_none());
+//! let result = filter.filter(3);
+//! assert!(result.is_some());
+//! assert_eq!(result.unwrap(), 10);
+//! ```
+//!
 #![cfg_attr(not(test), no_std)]
 
 mod decimator;
 mod differentiator;
 mod integrator;
 
-/// A cic filter
-/// M: decimation factor
-/// N: number of stages
+/// CIC decimation filter.  
+/// - `M` - Decimation factor  
+/// - `N` - Number of stages  
 pub struct CicDecimationFilter<const M: usize, const N: usize> {
     decimator: decimator::Decimator<M>,
     integrators: [integrator::Integrator; N],
@@ -22,6 +44,16 @@ impl<const M: usize, const N: usize> CicDecimationFilter<M, N> {
         }
     }
 
+    /// Process the input and return the output when the decimator is ready to output a value.     
+    ///
+    /// # Arguments
+    ///
+    /// * `input` - The input to filter.
+    ///
+    /// # Returns
+    ///
+    /// The output of the filter.  
+    /// When the decimator is ready to output a value, it will return some(input). Otherwise, it will return None.  
     #[inline]
     pub fn filter(&mut self, input: i32) -> Option<i32> {
         let mut output = input;

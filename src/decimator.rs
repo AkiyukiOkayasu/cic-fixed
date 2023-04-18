@@ -1,3 +1,6 @@
+//! Decimator (downsampler) for cic decimation filter.  
+
+/// Decimator
 #[derive(Default, Clone, Copy)]
 pub(crate) struct Decimator<const M: usize> {
     counter: usize,
@@ -8,6 +11,16 @@ impl<const M: usize> Decimator<M> {
         Self { counter: 0 }
     }
 
+    /// Decimate the input and return the output.
+    ///
+    /// # Arguments
+    ///
+    /// * `input` - The input to decimate.
+    ///
+    /// # Returns
+    ///
+    /// The output of the decimator.  
+    /// When the decimator is ready to output a value, it will return some(input). Otherwise, it will return None.  
     #[inline]
     pub(crate) fn decimate(&mut self, input: i32) -> Option<i32> {
         self.counter += 1;

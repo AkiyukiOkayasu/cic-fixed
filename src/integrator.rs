@@ -1,3 +1,8 @@
+//! Integrator  
+//!
+//! Simple integrator for cic filter.
+
+/// Integrator
 #[derive(Default, Clone, Copy)]
 pub(crate) struct Integrator {
     last_output: i32,
@@ -8,6 +13,15 @@ impl Integrator {
         Self { last_output: 0 }
     }
 
+    /// Integrate the input and return the output.
+    ///
+    /// # Arguments
+    ///
+    /// * `input` - The input to integrate.
+    ///
+    /// # Returns
+    ///
+    /// The output of the integrator.    
     #[inline]
     pub(crate) fn integrate(&mut self, input: i32) -> i32 {
         let output = self.last_output.wrapping_add(input);
