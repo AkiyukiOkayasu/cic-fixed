@@ -1,9 +1,9 @@
 [package]
 name = "cic-fixed"
-version = "0.3.1"
+version = "0.4.0"
 edition = "2021"
 authors = ["Akiyuki Okayasu <akiyuki.okayasu@gmail.com>"]
-description = "CIC filter"
+description = "CIC filter implementation for fixed point numbers"
 categories = ["no-std", "embedded"]
 keywords = ["cic", "filter", "no-std", "embedded"]
 license = "MIT OR Apache-2.0"
