@@ -56,6 +56,8 @@ impl<const M: usize, const N: usize> CicDecimationFilter<M, N> {
     /// When the decimator is ready to output a value, it will return some(input). Otherwise, it will return None.  
     #[inline]
     pub fn filter(&mut self, input: i32) -> Option<i32> {
+        let hoge = 0i32;
+
         let mut output = input;
         for integrator in self.integrators.iter_mut() {
             output = integrator.integrate(output);
