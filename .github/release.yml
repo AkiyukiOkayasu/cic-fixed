@@ -4,15 +4,15 @@ changelog:
   exclude:
     labels:
       - ignore-for-release
+      - duplicate
   categories:
     - title: Fixed Bugs 🐞
       labels:
         - bug
     - title: New Features 🎉
       labels:
-        - Semver-Minor
         - enhancement
-    - title: Breaking Changes
+    - title: Breaking Changes 🚧
       labels:
         - breaking-change
     - title: Other Changes

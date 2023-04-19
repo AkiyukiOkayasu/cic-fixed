@@ -17,10 +17,9 @@ jobs:
     steps:
     - uses: actions/checkout@v3
     - uses: Swatinem/rust-cache@v2
-    - uses: taiki-e/install-action@cargo-llvm-cov
     - uses: giraffate/clippy-action@v1
       with:
-        reporter: 'github-pr-review'        
+        reporter: 'github-pr-review'
     - name: Print stable Rust version
       run: rustc --version
     - name: Formatter
@@ -29,9 +28,3 @@ jobs:
       run: cargo build --verbose
     - name: Run tests
       run: cargo test --verbose
-#     - name: Code coverage
-#       env:
-#         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}        
-#       run: |        
-#         cargo llvm-cov --html
-# #        gh pr comment ${{ github.event.pull_request.number }} -F target/llvm-cov/html/index.html --repo ${{ github.repository }}
