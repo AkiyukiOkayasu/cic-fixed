@@ -43,5 +43,9 @@ mod tests {
         assert_eq!(result, 7);
         let result = integrator.integrate(10);
         assert_eq!(result, 17);
+        let result = integrator.integrate(-20);
+        assert_eq!(result, -3);
+        let result = integrator.integrate(8);
+        assert_eq!(result, 5);
     }
 }
