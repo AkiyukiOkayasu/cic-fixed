@@ -59,6 +59,7 @@ impl<const M: usize, const N: usize> CicDecimationFilter<M, N> {
     /// The output range is Input range * (M^N). For example, if Input range is +/-1, M is 4, and N is 2, the output range is +/-16.  
     /// When the decimator is ready to output a value, it will return some(input). Otherwise, it will return None.      
     #[inline]
+    #[must_use]
     pub fn filter(&mut self, input: i32) -> Option<i32> {
         let mut output = input;
         for integrator in self.integrators.iter_mut() {
