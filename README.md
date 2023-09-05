@@ -6,9 +6,10 @@
 A CIC filter implementation for fixed point numbers.  
 Implemented for use in converting PDM to PCM.  
 
-## TODO
+## WIP
 
-- Implement CIC interpolation filter
+- [x] CIC decimation filter
+- [ ] CIC interpolation filter
 
 ## no_std
 
