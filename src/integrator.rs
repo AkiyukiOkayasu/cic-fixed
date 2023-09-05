@@ -9,7 +9,7 @@ pub(crate) struct Integrator {
 }
 
 impl Integrator {
-    pub(crate) fn new() -> Self {
+    pub(crate) const fn new() -> Self {
         Self { last_output: 0 }
     }
 

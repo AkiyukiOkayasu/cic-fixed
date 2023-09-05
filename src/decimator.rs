@@ -7,7 +7,7 @@ pub(crate) struct Decimator<const M: usize> {
 }
 
 impl<const M: usize> Decimator<M> {
-    pub(crate) fn new() -> Self {
+    pub(crate) const fn new() -> Self {
         Self { counter: 0 }
     }
 

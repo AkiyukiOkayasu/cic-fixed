@@ -36,7 +36,10 @@ pub struct CicDecimationFilter<const M: usize, const N: usize> {
 }
 
 impl<const M: usize, const N: usize> CicDecimationFilter<M, N> {
-    pub fn new() -> Self {
+    pub const fn new() -> Self {
+        assert!(M > 0, "M (decimation factor) must be greater than 0. Without decimation, the CIC filter does not perform as an LPF.");
+        assert!(N > 0, "N (number of stages) must be greater than 0");
+
         Self {
             decimator: decimator::Decimator::new(),
             integrators: [integrator::Integrator::new(); N],
