@@ -75,6 +75,15 @@ impl<const M: usize, const N: usize> CicDecimationFilter<M, N> {
             None
         }
     }
+
+    /// Returns the number of bits increased by passing through the CIC deciamtion filter.  
+    /// The bit increase by the CIC decimation filter can be expressed by the following equation.  
+    /// log2(M)*N  
+    /// M is the decimation factor and N is the number of stages.  
+    #[must_use]
+    pub const fn bit_growth(&self) -> u32 {
+        M.ilog2() * N as u32
+    }
 }
 
 impl<const M: usize, const N: usize> Default for CicDecimationFilter<M, N> {
@@ -189,5 +198,17 @@ mod tests {
                 assert!(output == -16); //4^2
             }
         }
+    }
+
+    #[test]
+    fn bit_growth_test() {
+        let filter = CicDecimationFilter::<64, 3>::new();
+        assert_eq!(filter.bit_growth(), 18);
+
+        let filter = CicDecimationFilter::<32, 5>::new();
+        assert_eq!(filter.bit_growth(), 25);
+
+        let filter = CicDecimationFilter::<8, 5>::new();
+        assert_eq!(filter.bit_growth(), 15);
     }
 }
