@@ -50,14 +50,14 @@ mod tests {
         assert!(result.is_some());
         assert_eq!(result.unwrap(), 4);
 
-        let result = decimator.decimate(1);
+        let result = decimator.decimate(5);
         assert!(result.is_none());
-        let result = decimator.decimate(2);
+        let result = decimator.decimate(6);
         assert!(result.is_none());
-        let result = decimator.decimate(3);
+        let result = decimator.decimate(7);
         assert!(result.is_none());
-        let result = decimator.decimate(4);
+        let result = decimator.decimate(8);
         assert!(result.is_some());
-        assert_eq!(result.unwrap(), 4);
+        assert_eq!(result.unwrap(), 8);
     }
 }

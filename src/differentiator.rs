@@ -41,5 +41,7 @@ mod tests {
         assert_eq!(result, 2);
         let result = differentiator.differentiate(5);
         assert_eq!(result, 3);
+        let result = differentiator.differentiate(-1);
+        assert_eq!(result, -6);
     }
 }
