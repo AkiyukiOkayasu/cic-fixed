@@ -9,7 +9,7 @@ pub(crate) struct Differentiator {
 }
 
 impl Differentiator {
-    pub(crate) fn new() -> Self {
+    pub(crate) const fn new() -> Self {
         Self { last_input: 0 }
     }
 
