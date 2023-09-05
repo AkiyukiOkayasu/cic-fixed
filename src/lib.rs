@@ -80,6 +80,7 @@ impl<const M: usize, const N: usize> CicDecimationFilter<M, N> {
     /// The bit increase by the CIC decimation filter can be expressed by the following equation.  
     /// log2(M)*N  
     /// M is the decimation factor and N is the number of stages.  
+    #[must_use]
     pub const fn bit_growth(&self) -> u32 {
         M.ilog2() * N as u32
     }
