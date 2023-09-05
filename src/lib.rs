@@ -56,7 +56,8 @@ impl<const M: usize, const N: usize> CicDecimationFilter<M, N> {
     /// # Returns
     ///
     /// The output of the filter.  
-    /// When the decimator is ready to output a value, it will return some(input). Otherwise, it will return None.  
+    /// The output range is Input range * (M^N). For example, if Input range is +/-1, M is 4, and N is 2, the output range is +/-16.  
+    /// When the decimator is ready to output a value, it will return some(input). Otherwise, it will return None.      
     #[inline]
     pub fn filter(&mut self, input: i32) -> Option<i32> {
         let mut output = input;
@@ -69,7 +70,6 @@ impl<const M: usize, const N: usize> CicDecimationFilter<M, N> {
             for differentiator in self.differentiators.iter_mut() {
                 v = differentiator.differentiate(v);
             }
-            // TODO 出力はM^Nで割らないといけないかも
             Some(v)
         } else {
             None
@@ -157,6 +157,37 @@ mod tests {
 
         for _ in 0..1000 {
             filter.filter(i32::MAX);
+        }
+    }
+
+    // 出力範囲のテスト
+    // CICフィルターはMが4, Nが2とする。
+    // 最大出力はM^N = 4^2 = 16倍される。
+    // 入力範囲が-1~1の場合、出力範囲は-16~16
+    #[test]
+    fn output_range_test() {
+        let mut filter = CicDecimationFilter::<4, 2>::new();
+
+        for _ in 0..1000 {
+            let _result = filter.filter(1);
+        }
+
+        for _ in 0..10 {
+            if let Some(output) = filter.filter(1) {
+                println!("{}", output);
+                assert!(output == 16); //4^2
+            }
+        }
+
+        for _ in 0..1000 {
+            let _result = filter.filter(-1);
+        }
+
+        for _ in 0..10 {
+            if let Some(output) = filter.filter(-1) {
+                println!("{}", output);
+                assert!(output == -16); //4^2
+            }
         }
     }
 }
