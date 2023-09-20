@@ -9,13 +9,13 @@
 //! use cic_fixed::CicDecimationFilter;
 //!
 //! let mut filter = CicDecimationFilter::<4, 2>::new();
-//! let result = filter.filter(&0);
+//! let result = filter.process_sample(&0);
 //! assert!(result.is_none());
-//! let result = filter.filter(&1);
+//! let result = filter.process_sample(&1);
 //! assert!(result.is_none());
-//! let result = filter.filter(&2);
+//! let result = filter.process_sample(&2);
 //! assert!(result.is_none());
-//! let result = filter.filter(&3);
+//! let result = filter.process_sample(&3);
 //! assert!(result.is_some());
 //! assert_eq!(result.unwrap(), 10);
 //! ```
@@ -60,7 +60,7 @@ impl<const M: usize, const N: usize> CicDecimationFilter<M, N> {
     /// When the decimator is ready to output a value, it will return some(input). Otherwise, it will return None.      
     #[inline]
     #[must_use]
-    pub fn filter(&mut self, input: &i32) -> Option<i32> {
+    pub fn process_sample(&mut self, input: &i32) -> Option<i32> {
         let mut output = *input;
         for integrator in self.integrators.iter_mut() {
             output = integrator.integrate(output);
@@ -77,7 +77,7 @@ impl<const M: usize, const N: usize> CicDecimationFilter<M, N> {
         }
     }
 
-    /// Returns the number of bits increased by passing through the CIC deciamtion filter.  
+    /// Returns the number of bits increased by passing through the CIC decimation filter.  
     /// The bit increase by the CIC decimation filter can be expressed by the following equation.  
     /// log2(M)*N  
     /// M is the decimation factor and N is the number of stages.  
@@ -100,63 +100,63 @@ mod tests {
     #[test]
     fn cic_decimation_test() {
         let mut filter = CicDecimationFilter::<4, 2>::new();
-        let result = filter.filter(&0);
+        let result = filter.process_sample(&0);
         assert!(result.is_none());
-        let result = filter.filter(&1);
+        let result = filter.process_sample(&1);
         assert!(result.is_none());
-        let result = filter.filter(&2);
+        let result = filter.process_sample(&2);
         assert!(result.is_none());
-        let result = filter.filter(&3);
+        let result = filter.process_sample(&3);
         assert!(result.is_some());
         assert_eq!(result.unwrap(), 10);
 
-        let result = filter.filter(&2);
+        let result = filter.process_sample(&2);
         assert!(result.is_none());
-        let result = filter.filter(&-1);
+        let result = filter.process_sample(&-1);
         assert!(result.is_none());
-        let result = filter.filter(&-2);
+        let result = filter.process_sample(&-2);
         assert!(result.is_none());
-        let result = filter.filter(&1);
+        let result = filter.process_sample(&1);
         assert!(result.is_some());
         assert_eq!(result.unwrap(), 16);
 
-        let result = filter.filter(&2);
+        let result = filter.process_sample(&2);
         assert!(result.is_none());
-        let result = filter.filter(&-1);
+        let result = filter.process_sample(&-1);
         assert!(result.is_none());
-        let result = filter.filter(&-2);
+        let result = filter.process_sample(&-2);
         assert!(result.is_none());
-        let result = filter.filter(&1);
+        let result = filter.process_sample(&1);
         assert!(result.is_some());
         assert_eq!(result.unwrap(), 0);
 
-        let result = filter.filter(&2);
+        let result = filter.process_sample(&2);
         assert!(result.is_none());
-        let result = filter.filter(&-1);
+        let result = filter.process_sample(&-1);
         assert!(result.is_none());
-        let result = filter.filter(&-2);
+        let result = filter.process_sample(&-2);
         assert!(result.is_none());
-        let result = filter.filter(&1);
+        let result = filter.process_sample(&1);
         assert!(result.is_some());
         assert_eq!(result.unwrap(), 0);
 
-        let result = filter.filter(&0);
+        let result = filter.process_sample(&0);
         assert!(result.is_none());
-        let result = filter.filter(&1);
+        let result = filter.process_sample(&1);
         assert!(result.is_none());
-        let result = filter.filter(&2);
+        let result = filter.process_sample(&2);
         assert!(result.is_none());
-        let result = filter.filter(&3);
+        let result = filter.process_sample(&3);
         assert!(result.is_some());
         assert_eq!(result.unwrap(), 8);
 
-        let result = filter.filter(&3);
+        let result = filter.process_sample(&3);
         assert!(result.is_none());
-        let result = filter.filter(&3);
+        let result = filter.process_sample(&3);
         assert!(result.is_none());
-        let result = filter.filter(&-2);
+        let result = filter.process_sample(&-2);
         assert!(result.is_none());
-        let result = filter.filter(&1);
+        let result = filter.process_sample(&1);
         assert!(result.is_some());
         assert_eq!(result.unwrap(), 32);
     }
@@ -166,7 +166,7 @@ mod tests {
         let mut filter = CicDecimationFilter::<4, 2>::new();
 
         for _ in 0..1000 {
-            let _ = filter.filter(&i32::MAX);
+            let _ = filter.process_sample(&i32::MAX);
         }
     }
 
@@ -179,22 +179,22 @@ mod tests {
         let mut filter = CicDecimationFilter::<4, 2>::new();
 
         for _ in 0..1000 {
-            let _result = filter.filter(&1);
+            let _result = filter.process_sample(&1);
         }
 
         for _ in 0..10 {
-            if let Some(output) = filter.filter(&1) {
+            if let Some(output) = filter.process_sample(&1) {
                 println!("{}", output);
                 assert!(output == 16); //4^2
             }
         }
 
         for _ in 0..1000 {
-            let _result = filter.filter(&-1);
+            let _result = filter.process_sample(&-1);
         }
 
         for _ in 0..10 {
-            if let Some(output) = filter.filter(&-1) {
+            if let Some(output) = filter.process_sample(&-1) {
                 println!("{}", output);
                 assert!(output == -16); //4^2
             }

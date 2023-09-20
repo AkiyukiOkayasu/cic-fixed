@@ -42,3 +42,4 @@ Temporary Items
 # iCloud generated files
 *.icloud
 flamegraph.svg
+.vscode/settings.json
