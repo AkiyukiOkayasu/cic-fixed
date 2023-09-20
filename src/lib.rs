@@ -166,7 +166,7 @@ mod tests {
         let mut filter = CicDecimationFilter::<4, 2>::new();
 
         for _ in 0..1000 {
-            filter.filter(i32::MAX);
+            let _ = filter.filter(i32::MAX);
         }
     }
 
