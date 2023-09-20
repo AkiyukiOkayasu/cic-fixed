@@ -77,7 +77,7 @@ impl<const M: usize, const N: usize> CicDecimationFilter<M, N> {
         }
     }
 
-    /// Returns the number of bits increased by passing through the CIC deciamtion filter.  
+    /// Returns the number of bits increased by passing through the CIC decimation filter.  
     /// The bit increase by the CIC decimation filter can be expressed by the following equation.  
     /// log2(M)*N  
     /// M is the decimation factor and N is the number of stages.  
