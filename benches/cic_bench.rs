@@ -3,7 +3,7 @@
 //! # Example
 //!
 //! ```
-//! cargo criterion
+//! cargo bench
 //! ```
 //!
 
